@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import GamePage from './game-page'
+import UserPage from './user-page/userpage.js'
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+import './App.scss';
 
 class App extends Component {
   render() {
@@ -8,8 +10,8 @@ class App extends Component {
       <Router>
           <div>
             <Switch>
-              <Route path="/" exact component={LandingPage} />
-              <Route path="/login" exact component={LogInForm} />
+              <Route path="/" exact component={GamePage} />
+              <Route path="/user" exact component={UserPage} />
           </Switch>
         </div>
       </Router>
