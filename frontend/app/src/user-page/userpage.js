@@ -2,42 +2,14 @@ import React from "react"
 import { Link } from "react-router-dom"
 import SignUpForm from "./signup"
 import LogInForm from "./login"
+import './style.scss'
 
 class UserPage extends React.Component {
 
   state = {
     isLoggedIn: false,
-    newBook: {},
-    newBookAdded: false
   }
 
-  postData = () => {
-    const url = "http://localhost:8080/books"
-    const { newBook } = this.state
-    fetch(url, {
-      method: "POST",
-      body: JSON.stringify(newBook),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => {
-        if (response.status === 201) {
-          this.setState({
-            newBookAdded: true
-          })
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }
-
-  addNewBook = newBook => {
-    this.setState({
-      newBook
-    }, () => { this.postData() })
-  }
 
   checkLogInStatus = status => {
     this.setState({
