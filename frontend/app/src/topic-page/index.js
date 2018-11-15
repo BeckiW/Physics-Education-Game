@@ -1,21 +1,21 @@
 import React from "react"
 import "./style.scss"
-
-const url = `http://localhost8080/topics/id`
+import Question from '../question'
 
 
 class TopicPage extends React.Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      questionData: {},
-      error: false
-    }
-  }
+    state = {
+        questionData: [],
+        error: false
+      }
 
   componentDidMount() {
-    let topicId = 0;
+    this.fetchQuestions()
+  }
+
+  fetchQuestions = () => {
+    let topicId = "";
 
     if (this.props.id) {
       topicId = this.props.id;
@@ -27,13 +27,12 @@ class TopicPage extends React.Component {
       return response.text()
     }).then(text => {
       try {
-        const json = JSON.parse(text);
         this.setState({ questionData: json })
       } catch(err) {
         this.setState({ questionData: {}, error:true })
       }
     })
-  }
+}
 
   render() {
     if (this.state.error) {
@@ -46,16 +45,11 @@ class TopicPage extends React.Component {
     return (
       <div>
         <div className="question-text">
-          <p>{this.state.questionData.question}</p>
+        {this.state.questionData.map((question) => {
+          return <Question id= {question.topic_id}
+            question={question.question}/>
+          })}
         </div>
-
-
-      <div className="question-container">
-        <div className="job-intro">
-          <p>{this.state.questionData.answers}</p>
-        </div>
-      </div>
-
     </div>
     )
   }

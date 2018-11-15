@@ -194,8 +194,17 @@ app.get("/topics/", (req, res) => {
 
 //GET questions
 
+app.get("/questions/", (req, res) => {
+  Question.find(). then(questions => {
+    console.log("questions: ", questions)
+    res.json(questions)
+  })
+})
+
+
+
 app.get("/topics/:id", (req, res) => {
-  let topic_id = req.query.topic_id;
+  let topic_id = req.params.id
   let difficulty = req.query.difficulty
   let sortBy = req.query.sortBy
   let limit = req.query.limit
@@ -208,23 +217,33 @@ app.get("/topics/:id", (req, res) => {
       sortBy = "difficulty"
     }
 
-    let dbQuery = Question.find()
-
-      if (topic_id !== undefined) {
-        dbQuery.where('topic_id').regex(new RegExp(topic_id, "i"))
-      }
+    let dbQuery = Question.find(
+      {topic_id: topic_id}
+    ).sort({difficulty: 'asc'}).limit(10)
+    console.log("Topic ID: " + topic_id)
 
     dbQuery.then(questions => {
-
-    let result = questions;
-    result = result.slice(0, limit);
-    let jsonResult = JSON.stringify(result, null, 4);
-
-    res.setHeader('content-type', 'application/json');
-    res.send(jsonResult);
+    console.log("questions: ", questions)
+    res.send(questions);
   });
 })
 
+
+// app.get("/topics/:id", (req, res) => {
+//   let topic_id = req.query.topic_id;
+//   let difficulty = req.query.difficulty
+//   let sortBy = req.query.sortBy
+//   let limit = req.query.limit
+//
+//     let dbQuery = Question.find(
+//       {topic_id: topic_id// Search Filters
+//       }).sort({'difficulty': 1}).limit(10)
+//
+//     dbQuery.then(questions => {
+//     console.log("questions: ", questions)
+//     res.send(questions);
+//   });
+// })
 
 
 
@@ -235,8 +254,6 @@ app.post("/question", (req, res) => {
     .then(() => { res.status(201).send("question added") })
     .catch(err => { res.status(400).send(err) })
 })
-
-
 
 
 app.listen(8080, () => console.log("Physics Game API listening on port 8080!"))
