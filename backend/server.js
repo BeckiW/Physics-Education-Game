@@ -82,12 +82,10 @@ const Topic = mongoose.model("Topic", {
   level: {
     type: Number,
     required: true
-  },
-  genre: {
-    type: String,
-    required: true
   }
 })
+
+Topic.createCollection()
 
 
 //Results endpoints
@@ -98,12 +96,10 @@ const Result = mongoose.model("Result", {
     type: String,
     required: true
   },
-
   datetime: {
     type: Date,
     required: true
   },
-
   topic_id: {
     type: String,
     required: true
@@ -114,6 +110,8 @@ const Result = mongoose.model("Result", {
   }
 })
 
+Result.createCollection()
+
 //Results endpoints
 
 const Question = mongoose.model("Question", {
@@ -122,22 +120,21 @@ const Question = mongoose.model("Question", {
     type: String,
     required: true
   },
-
   difficulty: {
     type: Number,
     required: true
   },
-
   question_text: {
     type: String,
     required: true
   },
-
   answers: {
     type: Array,
     required: true
   }
 })
+
+Question.createCollection()
 
 //////ENDPOINTS//////
 
@@ -180,9 +177,63 @@ app.post("/results", (req, res) => {
   checkAuth(req, res, (user) => {
     const newResult = new Result({
 
+
     })
   })
 
+})
+
+//GET topics
+
+app.get("/topics/", (req, res) => {
+  Topic.find(). then(topics => {
+    console.log("topics: ", topics)
+    res.json(topics)
+  })
+})
+
+//GET questions
+
+app.get("/topics/:id", (req, res) => {
+  let topic_id = req.query.topic_id;
+  let difficulty = req.query.difficulty
+  let sortBy = req.query.sortBy
+  let limit = req.query.limit
+
+    if (limit === undefined) {
+      limit = 10;
+    }
+
+    if (sortBy === undefined) {
+      sortBy = "difficulty"
+    }
+
+    let dbQuery = Question.find()
+
+      if (topic_id !== undefined) {
+        dbQuery.where('topic_id').regex(new RegExp(topic_id, "i"))
+      }
+
+    dbQuery.then(questions => {
+
+    let result = questions;
+    result = result.slice(0, limit);
+    let jsonResult = JSON.stringify(result, null, 4);
+
+    res.setHeader('content-type', 'application/json');
+    res.send(jsonResult);
+  });
+})
+
+
+
+
+// POST single question to db
+app.post("/question", (req, res) => {
+  const question = new question(req.body)
+  question.save()
+    .then(() => { res.status(201).send("question added") })
+    .catch(err => { res.status(400).send(err) })
 })
 
 
