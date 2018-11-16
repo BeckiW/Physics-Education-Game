@@ -2,13 +2,13 @@ import React from 'react'
 import './style.scss'
 
 
-class Question extends React.Component {
+class Answer extends React.Component {
 
-  state ={
-    selectedAnswer: ""
-  }
-
-
+  handleClick = (event) => {
+     this.setState({
+       selectedAnswer: event.target.value,
+     }, () => this.props.onSelectedAnswer(this.state.selectedAnswer))
+ }
 
   render() {
     return (
@@ -17,9 +17,8 @@ class Question extends React.Component {
      <button >{this.props.answer}</button>
      </div>
 
-
     )
   }
 }
 
-export default Question
+export default Answer

@@ -1,6 +1,7 @@
 import React from 'react'
 import "./style.scss"
 import Question from '../question'
+import Answer from '../answer'
 
 
 class TopicPage extends React.Component {
@@ -8,7 +9,8 @@ class TopicPage extends React.Component {
     state = {
         questionData: [],
         questionToShow: 0,
-        correctAnswer: ""
+        correctAnswer: "",
+        selectedAnswer
       }
 
 
@@ -45,12 +47,6 @@ class TopicPage extends React.Component {
       })
   }
 
-  checkCorrectAnswer = () => {
-
-
-  }
-
-
 
   render() {
 
@@ -66,11 +62,20 @@ class TopicPage extends React.Component {
 
     return (
       <div>
-        <div className="question-text">
-          <Question question={question}/>
-        </div>
-        <button onClick={this.handleClickLoadNext}> Load Next Question </button>
+          <div className="question-text">
+            <Question question={question}/>
+          </div>
 
+          <div className="answers">
+                {question.answers.map(answer => (
+                  <Answer
+                    id={answer.id}
+                    answer={answer}
+                  />
+                ))}
+          </div>
+
+        <button onClick={this.handleClickLoadNext}> Load Next Question </button>
     </div>
     )
   }
