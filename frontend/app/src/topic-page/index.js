@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import "./style.scss"
 import Question from '../question'
 
@@ -7,8 +7,10 @@ class TopicPage extends React.Component {
 
     state = {
         questionData: [],
-        error: false
+        questionToShow: 0,
+        correctAnswer: ""
       }
+
 
   componentDidMount() {
     this.fetchQuestions()
@@ -23,33 +25,52 @@ class TopicPage extends React.Component {
       topicId = this.props.match.params.id;
     }
 
-    fetch(`http://localhost:8080/topics/${topicId}`).then(response => {
-      return response.text()
-    }).then(text => {
-      try {
-        this.setState({ questionData: json })
-      } catch(err) {
-        this.setState({ questionData: {}, error:true })
-      }
+    fetch(`http://localhost:8080/topics/${topicId}`).then((response) => {
+      return response.json()
+    })
+    .then((json) => {
+      this.setState({
+        questionData: json
+      })
+    })
+    .catch((error) => {
+      console.log(error)
     })
 }
 
+  handleClickLoadNext = () => {
+    let nextQuestionToShow = this.state.questionToShow + 1
+    this.setState({
+        questionToShow: nextQuestionToShow
+      })
+  }
+
+  checkCorrectAnswer = () => {
+
+
+  }
+
+
+
   render() {
+
+
     if (this.state.error) {
-      return (<div><h1 className = "broken" >Sorry...</h1><p className = "testBroken">Something went wrong!</p></div>)
+      return (<div><h1 className="broken">Sorry...</h1><p className="testBroken">Something went wrong!</p></div>)
     }
-    if (!this.state.questionData.id) {
-      return null
+    if (this.state.questionData === undefined || this.state.questionData.length === 0) {
+      return <div><p>No questions found</p></div>
     }
+
+    let question = this.state.questionData[this.state.questionToShow]
 
     return (
       <div>
         <div className="question-text">
-        {this.state.questionData.map((question) => {
-          return <Question id= {question.topic_id}
-            question={question.question}/>
-          })}
+          <Question question={question}/>
         </div>
+        <button onClick={this.handleClickLoadNext}> Load Next Question </button>
+
     </div>
     )
   }

@@ -4,7 +4,6 @@ import Header from '../header'
 class Stats extends React.Component {
 
 
-
   render() {
     return (
     <div>

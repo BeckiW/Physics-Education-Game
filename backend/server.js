@@ -124,12 +124,16 @@ const Question = mongoose.model("Question", {
     type: Number,
     required: true
   },
-  question_text: {
+  text: {
     type: String,
     required: true
   },
   answers: {
     type: Array,
+    required: true
+  },
+  correct_answer: {
+    type: Number,
     required: true
   }
 })
@@ -219,7 +223,7 @@ app.get("/topics/:id", (req, res) => {
 
     let dbQuery = Question.find(
       {topic_id: topic_id}
-    ).sort({difficulty: 'asc'}).limit(10)
+    ).sort({[sortBy]: 'asc'}).limit(10)
     console.log("Topic ID: " + topic_id)
 
     dbQuery.then(questions => {

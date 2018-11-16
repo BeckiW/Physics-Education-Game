@@ -33,25 +33,22 @@ class GamePage extends React.Component {
       }
 
 
-
   render() {
     return (
 
-      <div>
+    <div>
+
       <Header />
 
       <div className="product-container">
-
               {this.state.topics.map((topic) => {
                 return <TopicList id= {topic._id}
                   title={topic.title}
                   />
               })}
-
-</div>
-
-
       </div>
+
+    </div>
 
     )
   }
