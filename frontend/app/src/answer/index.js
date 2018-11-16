@@ -4,17 +4,31 @@ import './style.scss'
 
 class Answer extends React.Component {
 
-  handleClick = (event) => {
-     this.setState({
-       selectedAnswer: event.target.value,
-     }, () => this.props.onSelectedAnswer(this.state.selectedAnswer))
- }
+  constructor(props) {
+        super(props)
+        this.state = {
+          answer: null
+        }
+      }
+
+  onClick = () => {
+    alert(this.props.index)
+    let currentAnswer = this.props.index
+    this.setState({
+        answer: currentAnswer
+      })
+  }
+
+  handleOnClick = () => {
+      this.props.handleOnClick(this.state)
+    }
+
 
   render() {
     return (
 
     <div className="answer">
-     <button >{this.props.answer}</button>
+     <button id={this.props.index} onClick={this.handleClick}>{this.props.answer}</button>
      </div>
 
     )

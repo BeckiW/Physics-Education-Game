@@ -9,8 +9,8 @@ class TopicPage extends React.Component {
     state = {
         questionData: [],
         questionToShow: 0,
-        correctAnswer: "",
-        selectedAnswer
+        correctAnswer: null,
+        selectedAnswer: ""
       }
 
 
@@ -47,6 +47,12 @@ class TopicPage extends React.Component {
       })
   }
 
+  isCorrectAnswer = () => {
+
+
+  }
+
+
 
   render() {
 
@@ -60,6 +66,7 @@ class TopicPage extends React.Component {
 
     let question = this.state.questionData[this.state.questionToShow]
 
+
     return (
       <div>
           <div className="question-text">
@@ -67,10 +74,12 @@ class TopicPage extends React.Component {
           </div>
 
           <div className="answers">
-                {question.answers.map(answer => (
+                {question.answers.map((answer, index) => (
                   <Answer
                     id={answer.id}
+                    index={index}
                     answer={answer}
+                    isCorrectAnswer={this.isCorrectAnswer}
                   />
                 ))}
           </div>
