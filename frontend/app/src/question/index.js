@@ -6,19 +6,13 @@ import './style.scss'
 
 class Question extends React.Component {
 
-
-
   render() {
     return (
-      <div>
-
-        <div className="question-container">
-          <ul>
-            <p>{this.props.question._id}</p>
-            <p>{this.props.question.text}</p>
-          </ul>
+      <div className="question-container">
+        <div className="question">
+          <div className="question-text">{this.props.question.text}</div>
+          <div className="question-id">{this.props.question._id}</div>
         </div>
-
       </div>
     )
   }

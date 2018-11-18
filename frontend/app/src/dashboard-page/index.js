@@ -1,13 +1,12 @@
 import React from 'react'
 import "./style.scss"
-import Header from '../header'
 import TopicList from '../topiclist'
 
 
 let userToken = ""
 let URL = "http://localhost:8080/topics/"
 
-class GamePage extends React.Component {
+class DashboardPage extends React.Component {
 
   state = {
       topics: []
@@ -35,24 +34,26 @@ class GamePage extends React.Component {
 
   render() {
     return (
-
-    <div>
-
-      <Header />
-
-      <div className="product-container">
-              {this.state.topics.map((topic) => {
-                return <TopicList id= {topic._id}
-                  title={topic.title}
-                  />
-              })}
+      <div className="dashboard-container">
+        <div className="dashboard-main">
+          <div className="topic-list">
+            <h2>Physics Topics</h2>
+            {this.state.topics.map((topic) => {
+              return <TopicList id= {topic._id}
+                title={topic.title}
+                />
+            })}
+          </div>
+        </div>
+        <div className="dashboard-sidebar">
+          <div>
+            <h2>Something Here!</h2>
+          </div>
+        </div>
       </div>
-
-    </div>
-
     )
   }
 
 }
 
-export default GamePage
+export default DashboardPage

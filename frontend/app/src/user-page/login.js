@@ -47,7 +47,6 @@ class LogInForm extends React.Component {
   render() {
     return (
       <div>
-      <Header />
         <h4>LOG IN</h4>
         <form className="loginForm" onSubmit={this.submitForm}>
           <label htmlFor="username">Username: </label>

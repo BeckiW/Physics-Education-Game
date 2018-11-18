@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import GamePage from './game-page'
+import Header from './header'
+import HomePage from './home-page'
+import DashboardPage from './dashboard-page'
 import UserPage from './user-page/userpage.js'
 import TopicPage from './topic-page'
 import Stats from './stats-page'
+import PostQuizPage from './post-quiz-page'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import './App.scss';
 
@@ -26,13 +29,19 @@ class App extends Component {
   render() {
     return (
       <Router>
-          <div>
-            <Switch>
-              <Route path="/" exact component={GamePage} />
-              <Route path="/user" exact component={UserPage} />
-              <Route path="/topic/:id" exact component={TopicPage} />
-              <Route path="/stats" exact component={Stats} />
-          </Switch>
+          <div className="app">
+            <Header />
+
+            <div className="content">
+              <Switch>
+                <Route path="/" exact component={HomePage} />
+                <Route path="/dashboard" exact component={DashboardPage} />
+                <Route path="/user" exact component={UserPage} />
+                <Route path="/topic/:id" exact component={TopicPage} />
+                <Route path="/PostQuizPage" exact component={PostQuizPage} />
+                <Route path="/stats" exact component={Stats} />
+              </Switch>
+            </div>
         </div>
       </Router>
     )

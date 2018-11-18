@@ -179,9 +179,8 @@ app.post("/sessions", (req, res) => {
 app.post("/results", (req, res) => {
 
   checkAuth(req, res, (user) => {
-    const newResult = new Result({
-
-
+    const Result = new Result({
+    
     })
   })
 
@@ -258,6 +257,8 @@ app.post("/question", (req, res) => {
     .then(() => { res.status(201).send("question added") })
     .catch(err => { res.status(400).send(err) })
 })
+
+
 
 
 app.listen(8080, () => console.log("Physics Game API listening on port 8080!"))
