@@ -6,6 +6,16 @@ import TopicList from '../topiclist'
 let userToken = ""
 let URL = "http://localhost:8080/topics/"
 
+const iconImagesArray = [
+    "/waves.png",
+    "/idea-coppy.png",
+    "/flask.png",
+    "/lightning.png",
+    "/idea.png",
+    "/battery.png",
+    "/world.png"
+];
+
 class DashboardPage extends React.Component {
 
   state = {
@@ -32,6 +42,8 @@ class DashboardPage extends React.Component {
       }
 
 
+
+
   render() {
     return (
       <div className="dashboard-container">
@@ -39,7 +51,7 @@ class DashboardPage extends React.Component {
           <div className="topic-list">
             <h2>Physics Topics</h2>
             {this.state.topics.map((topic) => {
-              return <TopicList id= {topic._id}
+              return <TopicList id={topic._id}
                 title={topic.title}
                 />
             })}

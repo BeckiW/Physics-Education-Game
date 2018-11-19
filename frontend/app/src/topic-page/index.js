@@ -37,8 +37,8 @@ class TopicPage extends React.Component {
   }
 
   progressStep = () => {
-    if(this.state.totalScore === 10)
-    return this.setState({ progress: Math.round(this.state.totalScore / (10) * 100) })
+    this.setState({
+      progress: Math.round(((this.state.totalScore)/10) * 100)})
   }
 
   fetchQuestions = () => {
@@ -76,8 +76,7 @@ class TopicPage extends React.Component {
     //takes the index of the current question
     let currentQuestion = this.state.questionData[this.state.questionToShow]
     // passed up as props from child
-    if (selectedAnswerIndex === currentQuestion.correct_answer) {
-      console.log("You win")
+    if (selectedAnswerIndex == currentQuestion.correct_answer) {
       this.progressStep()
       this.setState({
         totalScore: this.state.totalScore + 1
@@ -105,7 +104,6 @@ class TopicPage extends React.Component {
     let question = this.state.questionData[this.state.questionToShow]
 
     if (this.state.totalScore >= 2 || this.state.questionData.length < 1) {
-
       //does this have to be in a callback? Or a settime out
       window.location.assign('/PostQuizPage');
     }
@@ -126,6 +124,7 @@ class TopicPage extends React.Component {
                   id={answer.id}
                   index={index}
                   answer={answer}
+                  progress={this.state.progress}
                   isCorrectAnswer={this.isCorrectAnswer}
                   handleClickLoadNext={this.handleClickLoadNext}
                 />

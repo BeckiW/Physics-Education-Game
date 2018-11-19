@@ -142,7 +142,7 @@ Question.createCollection()
 
 //////ENDPOINTS//////
 
-// POST new user to user db
+// POST new user to user db (not working)
 app.post("/users", (req, res) => {
   const newUser = new User({
     username: req.body.username,
@@ -179,12 +179,12 @@ app.post("/sessions", (req, res) => {
 app.post("/results", (req, res) => {
 
   checkAuth(req, res, (user) => {
-    const Result = new Result({
-    
+    const Result = new Result
+    result.save()
+      .then(() => { res.status(201).send("result added") })
+      .catch(err => { res.status(400).send(err) })
     })
   })
-
-})
 
 //GET topics
 

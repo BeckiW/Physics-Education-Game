@@ -8,10 +8,8 @@ class ProgressBar extends React.Component {
     active: false,
   };
 
-  max = 10
-
   progressStep = {
-    width: this.state.active ? this.max : this.props.progress
+    width: this.state.active ? "100%" : this.props.progress + "%"
   }
 
   render() {
