@@ -1,11 +1,30 @@
 import React from "react"
 import './style.scss'
+import DuoPhysicsClient from "../../model/duophysics-client.js"
 
 class Header extends React.Component {
 
+  state = {
+    updateCounter: 0
+  }
 
+  constructor() {
+    super()
+  }
+
+  componentDidMount() {
+    DuoPhysicsClient.updateHeaderCallback = this.updateHeaderCallback;
+  }
+
+  updateHeaderCallback = () => {
+    this.setState({
+      updateCounter: this.state.updateCounter + 1
+    })
+  }
 
   render() {
+    let userInfo = DuoPhysicsClient.isLoggedIn() ? "Logged In" : "Logged Out"
+
     return (
       <header>
         <div className="headerContent">
@@ -14,6 +33,9 @@ class Header extends React.Component {
           </div>
           <div className="siteTitle">
             <a href="/">Duophysics</a>
+          </div>
+          <div className="userInfo">
+            {userInfo}
           </div>
           <nav className="headerLinks">
             <ul>

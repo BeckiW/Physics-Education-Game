@@ -1,5 +1,6 @@
 import React from "react"
 import Header from '../header'
+import DuoPhysicsClient from "../../model/duophysics-client.js"
 
 class LogInForm extends React.Component {
 
@@ -32,9 +33,9 @@ class LogInForm extends React.Component {
         response.json()
       ))
       .then(result => {
-        localStorage.setItem("id", result.id)
-        localStorage.setItem("accessToken", result.accessToken)
+        DuoPhysicsClient.onLogin(result.id, result.accessToken);
         console.log("Success!")
+
         this.setState({
           isLoggedIn: true
         }, () => {this.props.onLogin(this.state.isLoggedIn) })

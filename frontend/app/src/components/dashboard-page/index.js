@@ -1,18 +1,14 @@
 import React from 'react'
 import "./style.scss"
 import TopicList from '../topiclist'
+import DuoPhysicsClient from "../../model/duophysics-client.js"
 
-
-let userToken = ""
-let URL = "http://localhost:8080/topics/"
 
 class DashboardPage extends React.Component {
 
   state = {
     topics: [],
-    isAuthenticated: false,
     user: null,
-    token: ''
   }
 
   componentDidMount() {
@@ -20,9 +16,7 @@ class DashboardPage extends React.Component {
   }
 
   fetchData = () => {
-    console.log("A")
-
-    fetch(URL)
+    fetch(`${DuoPhysicsClient.ServerUrl}/topics`)
       .then((response) => {
         return response.json()
       })

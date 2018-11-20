@@ -3,6 +3,7 @@ import "./style.scss"
 import Question from '../question'
 import Answer from '../answer'
 import ProgressBar from '../progressBar'
+import DuoPhysicsClient from "../../model/duophysics-client.js"
 
 let shuffleArray = (array) => {
   let currentIndex = array.length, temporaryValue, randomIndex;
@@ -43,7 +44,7 @@ class TopicPage extends React.Component {
       progress: Math.round(((this.state.totalScore)/10) * 100)})
   }
 
-  fetchQuestions = () => {
+  getTopicId = () => {
     let topicId = "";
 
     if (this.props.id) {
@@ -52,7 +53,13 @@ class TopicPage extends React.Component {
       topicId = this.props.match.params.id;
     }
 
-    fetch(`http://localhost:8080/topics/${topicId}`).then((response) => {
+    return topicId
+  }
+
+  fetchQuestions = () => {
+    let topicId = this.getTopicId()
+
+    fetch(`${DuoPhysicsClient.ServerUrl}/topics/${topicId}`).then((response) => {
       return response.json()
     })
     .then((data) => {
@@ -67,15 +74,73 @@ class TopicPage extends React.Component {
     })
   }
 
+  checkIfQuizEnded = () => {
+    let quizEnded = false;
+    let didWin = false;
+
+    if (this.state.totalScore >= 10) {
+      quizEnded = true;
+      didWin = true;
+    }
+    else if (this.state.questionsAnswered === 5 && this.state.totalScore < 10){
+      quizEnded = true;
+      didWin = false;
+    }
+
+    if (quizEnded) {
+      console.log("SENDING REQUEST")
+
+      let payload = {
+        topic_id: this.getTopicId(),
+        score: this.state.totalScore
+      }
+
+      let accessToken = DuoPhysicsClient.getUserToken()
+
+      fetch(`${DuoPhysicsClient.ServerUrl}/results?accessToken=${accessToken}`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+        .then((response) => {
+          return response.json()
+        })
+        .then((data) => {
+          console.log(data)
+
+          if (didWin) {
+            this.props.history.push('/PostQuizPage')
+          } else {
+            this.props.history.push('/EndQuizPage')
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+
+          if (didWin) {
+            this.props.history.push('/PostQuizPage')
+          } else {
+            this.props.history.push('/EndQuizPage')
+          }
+        })
+
+      this.setState({
+        quizEnded: true
+      })
+    }
+  }
+
   advanceQuestion = () => {
     this.updateProgressBar()
     let nextQuestionToShow = this.state.questionToShow + 1
 
     this.setState({
-        questionToShow: nextQuestionToShow,
-        questionsAnswered: this.state.questionsAnswered + 1,
-        showQuestionResult: false
-      })
+      questionToShow: nextQuestionToShow,
+      questionsAnswered: this.state.questionsAnswered + 1,
+      showQuestionResult: false
+    }, this.checkIfQuizEnded)
   }
 
   onSkipQuestion = () => {
@@ -125,15 +190,11 @@ class TopicPage extends React.Component {
       return <div><p>No questions found</p></div>
     }
 
+    if (this.state.quizEnded) {
+      return <div><p>Quiz Ended</p></div>
+    }
+
     let question = this.state.questionData[this.state.questionToShow]
-
-    if (this.state.totalScore >= 10) {
-      window.location.assign('/PostQuizPage');
-    }
-    else if (this.state.questionsAnswered === 5 && this.state.totalScore < 10){
-      window.location.assign('/EndQuizPage')
-    }
-
     let content = ""
 
     if (this.state.showQuestionResult)

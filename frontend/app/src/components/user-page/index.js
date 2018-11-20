@@ -3,25 +3,33 @@ import { Link } from "react-router-dom"
 import SignUpForm from "./signup"
 import LogInForm from "./login"
 import './style.scss'
+import DuoPhysicsClient from "../../model/duophysics-client.js"
 
 class UserPage extends React.Component {
 
   state = {
-    isLoggedIn: false,
+    isLoggedIn: false
   }
 
-
-  checkLogInStatus = status => {
+  updateLoginStatus = status => {
     this.setState({
       isLoggedIn: status
-    }, () => { console.log(this.state.isLoggedIn)} )
+    });
+  }
+
+  logout = () => {
+    DuoPhysicsClient.logout();
+    this.setState({
+      isLoggedIn: false
+    })
   }
 
   render() {
-    if(this.state.isLoggedIn) {
+    if(DuoPhysicsClient.isLoggedIn()) {
       return (
         <div className="pageContentUserInfo">
-          <h1> You are logged in! </h1>
+          <h1>You are logged in!</h1>
+          <button onClick={this.logout}>Logout</button>
         </div>
       )
     } else {
@@ -32,10 +40,10 @@ class UserPage extends React.Component {
           </div>
           <div className="formsContainer">
             <div className="formBox">
-              <LogInForm onLogin={this.checkLogInStatus} />
+              <LogInForm onLogin={this.updateLoginStatus} />
             </div>
             <div className="formBox">
-              <SignUpForm onLogin={this.checkLogInStatus} />
+              <SignUpForm onLogin={this.updateLoginStatus} />
             </div>
           </div>
         </div>

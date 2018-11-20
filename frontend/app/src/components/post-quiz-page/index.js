@@ -14,7 +14,7 @@ class PostQuizPage extends React.Component {
 
         <img src={"./winner.png"} alt="winner" />
 
-        <a href={"/dashboard"}><button> Continue </button></a>
+        <a href={"/dashboard"}><button>Continue</button></a>
       </div>
     )
   }

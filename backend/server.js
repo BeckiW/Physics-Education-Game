@@ -22,7 +22,7 @@ mongoose.connection.once("open", () => console.log("Connected to mongodb"))
 
 //Check Authentication
 function checkAuth(req, res, validFunc) {
-  let accessToken = req.query.token || null;
+  let accessToken = req.query.accessToken || null;
 
   if (accessToken == null) {
     return res.status(200).json({ error: "Method requires user token" });
@@ -184,9 +184,15 @@ app.post("/sessions", (req, res) => {
 
 app.post("/results", (req, res) => {
   checkAuth(req, res, (user) => {
-    const Result = new Result
+    const result = new Result({
+      user_id: user._id,
+      datetime: new Date(),
+      topic_id: req.body.topic_id,
+      score: req.body.score
+    })
+
     result.save()
-      .then(() => { res.status(201).send("result added") })
+      .then(() => { res.status(201).send(JSON.stringify({success: true})) })
       .catch(err => { res.status(400).send(err) })
     })
   })
