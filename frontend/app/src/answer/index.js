@@ -12,16 +12,14 @@ class Answer extends React.Component {
     }
   }
 
-  isCorrectAnswer = () => {
-    alert(this.props.index)
-    this.props.isCorrectAnswer(this.props.index)
-    this.props.handleClickLoadNext()
+  onClick = () => {
+    this.props.onAnswerSelected(this.props.index)
   }
 
   render() {
     return (
       <div className="answer">
-        <button id={this.props.index} onClick={this.isCorrectAnswer}>{this.props.answer}</button>
+        <button id={this.props.index} onClick={this.onClick}>{this.props.answer}</button>
       </div>
     )
   }

@@ -29,7 +29,8 @@ class TopicPage extends React.Component {
         totalScore: 0,
         progress: 0,
         questionsAnswered: 0,
-        showVictory: false
+        showQuestionResult: false,
+        lastQuestionCorrect: false
       }
 
 
@@ -37,7 +38,7 @@ class TopicPage extends React.Component {
     this.fetchQuestions()
   }
 
-  progressStep = () => {
+  updateProgressBar = () => {
     this.setState({
       progress: Math.round(((this.state.totalScore)/10) * 100)})
   }
@@ -66,29 +67,39 @@ class TopicPage extends React.Component {
     })
   }
 
-  handleClickLoadNext = () => {
+  advanceQuestion = () => {
+    this.updateProgressBar()
     let nextQuestionToShow = this.state.questionToShow + 1
+
     this.setState({
         questionToShow: nextQuestionToShow,
-        questionsAnswered: this.state.questionsAnswered + 1
+        questionsAnswered: this.state.questionsAnswered + 1,
+        showQuestionResult: false
       })
   }
 
-  isCorrectAnswer = (selectedAnswerIndex) => {
+  onSkipQuestion = () => {
+    this.advanceQuestion()
+  }
+
+  onAnswerSelected = (selectedAnswerIndex) => {
     //takes the index of the current question
     let currentQuestion = this.state.questionData[this.state.questionToShow]
     // passed up as props from child
     if (selectedAnswerIndex === currentQuestion.correct_answer) {
+      console.log("Correct Answer!")
       this.setState({
         totalScore: this.state.totalScore + 1,
-        questionsAnswered: this.state.questionsAnswered + 1,
-      }, this.progressStep)
+        showQuestionResult: true,
+        lastQuestionCorrect: true
+      })
 
     } else {
-      console.log("You lose")
+      console.log("Wrong Answer!")
       this.setState({
         totalScore: this.state.totalScore,
-        questionsAnswered: this.state.questionsAnswered + 1
+        showQuestionResult: true,
+        lastQuestionCorrect: false
       })
     }
   }
@@ -123,6 +134,42 @@ class TopicPage extends React.Component {
       window.location.assign('/EndQuizPage')
     }
 
+    let content = ""
+
+    if (this.state.showQuestionResult)
+    {
+      let className = this.state.lastQuestionCorrect ? "correct-answer" : "wrong-answer"
+      let text = this.state.lastQuestionCorrect ? "Correct Answer!" : "Wrong Answer"
+
+      content = <div className={"result " + className}>
+        <div className="next-question">
+          <button onClick={this.onSkipQuestion}>Next Question</button>
+        </div>
+
+        <h2>{text}</h2>
+      </div>
+    }
+    else
+    {
+      content = <div>
+        <div className="answers">
+          {question.answers.map((answer, index) => (
+            <Answer
+              id={answer.id}
+              index={index}
+              answer={answer}
+              onAnswerSelected={this.onAnswerSelected}
+              totalScore={this.totalScore}
+            />
+          ))}
+        </div>
+
+        <div className="extras">
+          <button onClick={this.onSkipQuestion}>Skip Question</button>
+        </div>
+      </div>
+    }
+
     return (
       <div className="activity-container">
         <div className="activity-progress">
@@ -133,23 +180,7 @@ class TopicPage extends React.Component {
           <Question question={question}/>
         </div>
 
-        <div className="answers">
-              {question.answers.map((answer, index) => (
-                <Answer
-                  id={answer.id}
-                  index={index}
-                  answer={answer}
-                  isCorrectAnswer={this.isCorrectAnswer}
-                  handleClickLoadNext={this.handleClickLoadNext}
-                  questionsAnswered={this.questionsAnswered}
-                  totalScore={this.totalScore}
-                />
-              ))}
-        </div>
-
-        <div className="extras">
-          <button onClick={this.handleClickLoadNext}>Skip Question</button>
-        </div>
+        {content}
     </div>
     )
   }
