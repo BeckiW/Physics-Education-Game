@@ -53,6 +53,7 @@ class DashboardPage extends React.Component {
             {this.state.topics.map((topic) => {
               return <TopicList id={topic._id}
                 title={topic.title}
+                icon={topic.icon}
                 />
             })}
           </div>

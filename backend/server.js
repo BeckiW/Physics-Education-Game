@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 import express from "express"
 import bodyParser from "body-parser"
 import cors from "cors"
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt-nodejs"
 import uuid from "uuid-v4"
 
 const app = express()
@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 app.use(cors())
+app.use(express.static('public'))
 
 mongoose.connect("mongodb://localhost/physics-game-api")
 
@@ -144,6 +145,11 @@ Question.createCollection()
 
 // POST new user to user db (not working)
 app.post("/users", (req, res) => {
+  if (!req.body.username || !req.body.email || !req.body.password) {
+    res.status(400).json({ created: false, error: "You must provide a username, email and password." })
+    return
+  }
+
   const newUser = new User({
     username: req.body.username,
     email: req.body.email,
@@ -213,7 +219,7 @@ app.get("/topics/:id", (req, res) => {
   let limit = req.query.limit
 
     if (limit === undefined) {
-      limit = 10;
+      limit = 20;
     }
 
     if (sortBy === undefined) {

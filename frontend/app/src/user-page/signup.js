@@ -17,11 +17,13 @@ class SignUpForm extends React.Component {
 
   submitForm = event => {
     event.preventDefault()
+
     const userDetails = {
       username: this.state.username,
       email: this.state.email,
       password: this.state.password
     }
+
     fetch("http://localhost:8080/users", {
       method: "POST",
       body: JSON.stringify(userDetails),

@@ -9,22 +9,9 @@ import PostQuizPage from './post-quiz-page'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import './App.scss';
 
+let BACKEND_URL = "http://localhost:8080/"
+
 class App extends Component {
-
-  state = {
-     totalScore: 0
-  }
-
-  updateTotalScore = () => {
-    let prevScore = this.state.totalScore
-    let newScore = this.state.question.answers.find(answer => (
-      answer.id === this.state.selectedAnswer
-    )).score
-    this.setState({
-      totalScore: prevScore + newScore
-    })
-  }
-
 
   render() {
     return (

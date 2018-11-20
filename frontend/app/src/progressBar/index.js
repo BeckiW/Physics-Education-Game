@@ -8,16 +8,16 @@ class ProgressBar extends React.Component {
     active: false,
   };
 
-  progressStep = {
-    width: this.state.active ? "100%" : this.props.progress + "%"
-  }
-
   render() {
+
+    let progressStyle = {
+      width: this.state.active ? "100%" : this.props.progress + "%"
+    }
 
     return(
       <div className="progressBar">
         <div className="background"></div>
-        <div className="filler" style={this.progressStep}></div>
+        <div className="filler" style={progressStyle}></div>
       </div>
 
     )

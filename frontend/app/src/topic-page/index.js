@@ -77,17 +77,12 @@ class TopicPage extends React.Component {
     let currentQuestion = this.state.questionData[this.state.questionToShow]
     // passed up as props from child
     if (selectedAnswerIndex == currentQuestion.correct_answer) {
-      this.progressStep()
       this.setState({
         totalScore: this.state.totalScore + 1
-      })
+      }, this.progressStep)
 
     } else {
       console.log("You lose")
-      this.progressStep()
-      this.setState({
-        totalScore: this.state.totalScore - 1
-      })
     }
   }
 
@@ -124,7 +119,6 @@ class TopicPage extends React.Component {
                   id={answer.id}
                   index={index}
                   answer={answer}
-                  progress={this.state.progress}
                   isCorrectAnswer={this.isCorrectAnswer}
                   handleClickLoadNext={this.handleClickLoadNext}
                 />
