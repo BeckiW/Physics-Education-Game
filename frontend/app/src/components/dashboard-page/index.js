@@ -9,33 +9,34 @@ let URL = "http://localhost:8080/topics/"
 class DashboardPage extends React.Component {
 
   state = {
-      topics: [],
-      isAuthenticated: false,
-      user: null,
-      token: ''
-    }
+    topics: [],
+    isAuthenticated: false,
+    user: null,
+    token: ''
+  }
 
-    componentDidMount() {
-      this.fetchData()
-    }
+  componentDidMount() {
+    this.fetchData()
+  }
 
-    fetchData = () => {
-        fetch(URL)
-          .then((response) => {
-            return response.json()
-          })
-          .then((json) => {
-            this.setState({
-              topics: json
-            })
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      }
+  fetchData = () => {
+    console.log("A")
 
+    fetch(URL)
+      .then((response) => {
+        return response.json()
+      })
+      .then((json) => {
+        console.log(json)
 
-
+        this.setState({
+          topics: json
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
   render() {
     return (

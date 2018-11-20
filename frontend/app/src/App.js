@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Header from './header'
-import HomePage from './home-page'
-import DashboardPage from './dashboard-page'
-import UserPage from './user-page/userpage.js'
-import TopicPage from './topic-page'
-import Stats from './stats-page'
-import PostQuizPage from './post-quiz-page'
-import PostQuizLosePage from './post-quiz-lose'
+import Header from './components/header'
+import HomePage from './components/home-page'
+import DashboardPage from './components/dashboard-page'
+import UserPage from './components/user-page'
+import TopicPage from './components/topic-page'
+import Stats from './components/stats-page'
+import PostQuizPage from './components/post-quiz-page'
+import PostQuizLosePage from './components/post-quiz-lose'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import './App.scss';
 
@@ -28,7 +28,7 @@ class App extends Component {
         this.setState({isAuthenticated: true, user: user, token: token});
       }
     })
-}
+  }
 
   onFailed = (error) => {
     alert(error);
