@@ -183,7 +183,6 @@ app.post("/sessions", (req, res) => {
 //POST results
 
 app.post("/results", (req, res) => {
-
   checkAuth(req, res, (user) => {
     const Result = new Result
     result.save()
@@ -263,6 +262,7 @@ app.post("/question", (req, res) => {
     .then(() => { res.status(201).send("question added") })
     .catch(err => { res.status(400).send(err) })
 })
+
 
 
 

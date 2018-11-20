@@ -7,7 +7,7 @@ class Stats extends React.Component {
   render() {
     return (
     <div>
-      <Header />
+      <h1> Achievements </h1>
     </div>
     )
   }

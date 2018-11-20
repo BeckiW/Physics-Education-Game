@@ -16,7 +16,9 @@ class App extends Component {
   state = {
     isAuthenticated: false,
     user: null,
-    token: ''
+    token: '',
+    newResult: {},
+    newResultAdded: false
   }
 
   onSuccess = (response) => {
@@ -25,12 +27,47 @@ class App extends Component {
       if (token) {
         this.setState({isAuthenticated: true, user: user, token: token});
       }
-    });
-};
+    })
+}
 
   onFailed = (error) => {
     alert(error);
   };
+
+  postData = () => {
+    const url = "http://localhost:8080/result"
+    const { newResult } = this.state
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(newResult),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        if (response.status === 201) {
+          this.setState({
+            newResultAdded: true
+          })
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  addNewResult = newResult => {
+    this.setState({
+      newResult
+    }, () => { this.postData() })
+  }
+
+  checkLogInStatus = status => {
+    this.setState({
+      isAuthenticated: status
+    }, () => { console.log(this.state.isAuthenticated)} )
+  }
+
 
   logout = () => {
     this.setState({isAuthenticated: false, token: '', user: null})
