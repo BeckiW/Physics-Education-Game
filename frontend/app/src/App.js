@@ -9,9 +9,31 @@ import PostQuizPage from './post-quiz-page'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import './App.scss';
 
-let BACKEND_URL = "http://localhost:8080/"
 
 class App extends Component {
+
+  state = {
+    isAuthenticated: false,
+    user: null,
+    token: ''
+  }
+
+  onSuccess = (response) => {
+    const token = response.headers.get('x-auth-token');
+    response.json().then(user => {
+      if (token) {
+        this.setState({isAuthenticated: true, user: user, token: token});
+      }
+    });
+};
+
+onFailed = (error) => {
+    alert(error);
+  };
+
+  logout = () => {
+    this.setState({isAuthenticated: false, token: '', user: null})
+};
 
   render() {
     return (

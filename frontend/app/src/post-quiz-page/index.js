@@ -9,8 +9,12 @@ class PostQuizPage extends React.Component {
 
     return(
 
-      <div>
-        <h1> Your progress </h1>
+      <div className="winner-container">
+        <h1> Lesson Complete +10 XP</h1>
+
+        <img src={"./winner.png"} alt="winner" />
+
+        <a href={"/topic/"}><button> Continue </button></a>
       </div>
     )
   }

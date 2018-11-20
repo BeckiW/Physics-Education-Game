@@ -6,20 +6,13 @@ import TopicList from '../topiclist'
 let userToken = ""
 let URL = "http://localhost:8080/topics/"
 
-const iconImagesArray = [
-    "/waves.png",
-    "/idea-coppy.png",
-    "/flask.png",
-    "/lightning.png",
-    "/idea.png",
-    "/battery.png",
-    "/world.png"
-];
-
 class DashboardPage extends React.Component {
 
   state = {
-      topics: []
+      topics: [],
+      isAuthenticated: false,
+      user: null,
+      token: ''
     }
 
     componentDidMount() {
