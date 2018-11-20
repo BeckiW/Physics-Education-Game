@@ -2,7 +2,7 @@ import React from 'react'
 import './style.scss'
 
 
-class PostQuizPage extends React.Component {
+class PostQuizLosePage extends React.Component {
 
 
   render() {
@@ -10,9 +10,9 @@ class PostQuizPage extends React.Component {
     return(
 
       <div className="winner-container">
-        <h1> Lesson Complete +10 XP</h1>
+        <h1> Game over! You got ?? answers correct</h1>
 
-        <img src={"./winner.png"} alt="winner" />
+        <img src={"./GameOver.png"} alt="loser" />
 
         <a href={"/dashboard"}><button> Continue </button></a>
       </div>
@@ -21,4 +21,4 @@ class PostQuizPage extends React.Component {
 
 }
 
-export default PostQuizPage
+export default PostQuizLosePage

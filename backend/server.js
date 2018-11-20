@@ -228,7 +228,7 @@ app.get("/topics/:id", (req, res) => {
 
     let dbQuery = Question.find(
       {topic_id: topic_id}
-    ).sort({[sortBy]: 'asc'}).limit(10)
+    ).sort({[sortBy]: 'asc'}).limit(20)
     console.log("Topic ID: " + topic_id)
 
     dbQuery.then(questions => {

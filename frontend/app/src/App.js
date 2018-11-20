@@ -6,6 +6,7 @@ import UserPage from './user-page/userpage.js'
 import TopicPage from './topic-page'
 import Stats from './stats-page'
 import PostQuizPage from './post-quiz-page'
+import PostQuizLosePage from './post-quiz-lose'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import './App.scss';
 
@@ -19,7 +20,7 @@ class App extends Component {
   }
 
   onSuccess = (response) => {
-    const token = response.headers.get('x-auth-token');
+    const token = response.headers.get('userToken');
     response.json().then(user => {
       if (token) {
         this.setState({isAuthenticated: true, user: user, token: token});
@@ -27,7 +28,7 @@ class App extends Component {
     });
 };
 
-onFailed = (error) => {
+  onFailed = (error) => {
     alert(error);
   };
 
@@ -46,8 +47,14 @@ onFailed = (error) => {
                 <Route path="/" exact component={HomePage} />
                 <Route path="/dashboard" exact component={DashboardPage} />
                 <Route path="/user" exact component={UserPage} />
-                <Route path="/topic/:id" exact component={TopicPage} />
+                <Route path="/topic/:id" exact
+                  render={(props) => <TopicPage {...props}
+                   swimTime={this.onSuccess}
+                   hikeTime={this.onFailed}
+                   gymTime={this.logout} />}
+                   />
                 <Route path="/PostQuizPage" exact component={PostQuizPage} />
+                <Route path="/EndQuizPage" exact component={PostQuizLosePage} />
                 <Route path="/stats" exact component={Stats} />
               </Switch>
             </div>

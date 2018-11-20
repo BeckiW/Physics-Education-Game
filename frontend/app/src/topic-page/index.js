@@ -29,6 +29,7 @@ class TopicPage extends React.Component {
         totalScore: 0,
         progress: 0,
         questionsAnswered: 0,
+        showVictory: false
       }
 
 
@@ -68,7 +69,8 @@ class TopicPage extends React.Component {
   handleClickLoadNext = () => {
     let nextQuestionToShow = this.state.questionToShow + 1
     this.setState({
-        questionToShow: nextQuestionToShow
+        questionToShow: nextQuestionToShow,
+        questionsAnswered: this.state.questionsAnswered + 1
       })
   }
 
@@ -76,14 +78,30 @@ class TopicPage extends React.Component {
     //takes the index of the current question
     let currentQuestion = this.state.questionData[this.state.questionToShow]
     // passed up as props from child
-    if (selectedAnswerIndex == currentQuestion.correct_answer) {
+    if (selectedAnswerIndex === currentQuestion.correct_answer) {
       this.setState({
-        totalScore: this.state.totalScore + 1
+        totalScore: this.state.totalScore + 1,
+        questionsAnswered: this.state.questionsAnswered + 1,
       }, this.progressStep)
 
     } else {
       console.log("You lose")
+      this.setState({
+        totalScore: this.state.totalScore,
+        questionsAnswered: this.state.questionsAnswered + 1
+      })
     }
+  }
+
+
+  updateTotalScore = () => {
+    let prevScore = this.state.totalScore
+    let newScore = this.state.question.answers.find(answer => (
+      answer.id === this.state.selectedAnswer
+    )).score
+    this.setState({
+      totalScore: prevScore + newScore
+    })
   }
 
 
@@ -98,9 +116,11 @@ class TopicPage extends React.Component {
 
     let question = this.state.questionData[this.state.questionToShow]
 
-    if (this.state.totalScore >= 2 || this.state.questionData.length < 1) {
-      //does this have to be in a callback? Or a settime out
+    if (this.state.totalScore >= 10) {
       window.location.assign('/PostQuizPage');
+    }
+    else if (this.state.questionsAnswered === 5 && this.state.totalScore < 10){
+      window.location.assign('/EndQuizPage')
     }
 
     return (
@@ -121,6 +141,8 @@ class TopicPage extends React.Component {
                   answer={answer}
                   isCorrectAnswer={this.isCorrectAnswer}
                   handleClickLoadNext={this.handleClickLoadNext}
+                  questionsAnswered={this.questionsAnswered}
+                  totalScore={this.totalScore}
                 />
               ))}
         </div>
