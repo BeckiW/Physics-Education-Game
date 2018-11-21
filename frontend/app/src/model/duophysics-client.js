@@ -9,6 +9,7 @@ class DuoPhysicsClient {
 
   _userId = ""
   _userToken = ""
+  _userName = ""
 
   updateHeaderCallback = undefined
 

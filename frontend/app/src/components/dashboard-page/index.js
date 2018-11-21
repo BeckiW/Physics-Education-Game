@@ -48,7 +48,8 @@ class DashboardPage extends React.Component {
         </div>
         <div className="dashboard-sidebar">
           <div>
-            <h2>Something Here!</h2>
+            <a href="/stats"><img src="/crown.png" alt="Logo" /></a>
+            <h2>You are on {0} crowns</h2>
           </div>
         </div>
       </div>

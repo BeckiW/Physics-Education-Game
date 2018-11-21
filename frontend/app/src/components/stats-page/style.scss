@@ -10,13 +10,9 @@
 }
 
 .user-box {
-    display: grid;
-    grid-template-columns: 120px auto;
-    grid-column-gap: 20px;
+    float: right;
     margin-bottom: 10px;
     height: 120px;
-    border: 1px solid black;
-    border-radius: 10px;
     padding: 10px;
 }
 

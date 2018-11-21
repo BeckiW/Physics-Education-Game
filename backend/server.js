@@ -229,15 +229,18 @@ app.get("/results/:id", (req, res) => {
 
 //Get scores
 
-app.get("/scores/", (req, res) => {
-  Result.find(
-    Result.aggregate([
-      { $group: {
-          _id: "user_id",
-          total: { $sum: "$score" }
-      }}]))
-    .then(results => {
-      res.json(results)
+app.get("/scores/:id", (req, res) => {
+
+  let user_id = req.params.id
+
+  Result.aggregate([
+    { $match: { "user_id": user_id } },
+    { $group: {
+        _id: "$user_id",
+        total: { $sum: "$score" }
+    }}])
+  .then(result => {
+    res.json(result)
     })
 })
 
