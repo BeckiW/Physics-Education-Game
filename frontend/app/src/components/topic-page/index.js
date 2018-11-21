@@ -201,8 +201,10 @@ class TopicPage extends React.Component {
     {
       let className = this.state.lastQuestionCorrect ? "correct-answer" : "wrong-answer"
       let text = this.state.lastQuestionCorrect ? "Correct Answer!" : "Wrong Answer"
+      let image = this.state.lastQuestionCorrect ? "/smile.png" : "/sad.png"
 
       content = <div className={"result " + className}>
+      <div><img className="face" src={image} alt="Logo" /></div>
         <div className="next-question">
           <button onClick={this.onSkipQuestion}>Next Question</button>
         </div>

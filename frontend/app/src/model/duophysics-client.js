@@ -38,9 +38,11 @@ class DuoPhysicsClient {
   logout = () => {
     localStorage.removeItem('UserId');
     localStorage.removeItem('UserToken');
+    localStorage.removeItem('Username');
 
     this._userId = "";
     this._userToken = "";
+    this._userName = "";
 
     if (this.updateHeaderCallback) {
       this.updateHeaderCallback();

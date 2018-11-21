@@ -216,6 +216,30 @@ app.get("/questions/", (req, res) => {
 })
 
 
+//GET Results
+
+app.get("/results/:id", (req, res) => {
+    checkAuth(req, res, (user) => {
+    Result.find(). then(results => {
+      console.log("Results ", results)
+      res.json(results)
+    })
+  })
+})
+
+//Get scores
+
+app.get("/scores/", (req, res) => {
+  Result.find(
+    Result.aggregate([
+      { $group: {
+          _id: "user_id",
+          total: { $sum: "$score" }
+      }}]))
+    .then(results => {
+      res.json(results)
+    })
+})
 
 app.get("/topics/:id", (req, res) => {
   let topic_id = req.params.id
@@ -243,24 +267,6 @@ app.get("/topics/:id", (req, res) => {
 })
 
 
-// app.get("/topics/:id", (req, res) => {
-//   let topic_id = req.query.topic_id;
-//   let difficulty = req.query.difficulty
-//   let sortBy = req.query.sortBy
-//   let limit = req.query.limit
-//
-//     let dbQuery = Question.find(
-//       {topic_id: topic_id// Search Filters
-//       }).sort({'difficulty': 1}).limit(10)
-//
-//     dbQuery.then(questions => {
-//     console.log("questions: ", questions)
-//     res.send(questions);
-//   });
-// })
-
-
-
 // POST single question to db
 app.post("/question", (req, res) => {
   const question = new question(req.body)
@@ -268,8 +274,6 @@ app.post("/question", (req, res) => {
     .then(() => { res.status(201).send("question added") })
     .catch(err => { res.status(400).send(err) })
 })
-
-
 
 
 

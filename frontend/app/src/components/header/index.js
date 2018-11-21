@@ -24,6 +24,7 @@ class Header extends React.Component {
 
   render() {
     let userInfo = DuoPhysicsClient.isLoggedIn() ? "Logged In" : "Logged Out"
+    let userLogged = DuoPhysicsClient.isLoggedIn() ? <a href="/user">Log Out</a> : <a href="/user">Login / Register</a>
 
     return (
       <header>
@@ -40,7 +41,7 @@ class Header extends React.Component {
           <nav className="headerLinks">
             <ul>
               <li><a href="/dashboard">Dashboard</a></li>
-              <li><a href="/user">Login / Register</a></li>
+              <li>{userLogged}</li>
               <li><a href="/stats">Stats</a></li>
             </ul>
           </nav>
