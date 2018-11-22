@@ -18,7 +18,42 @@ class App extends Component {
     user: null,
     token: '',
     newResult: {},
-    newResultAdded: false
+    newResultAdded: false,
+    totalScore: 0,
+    crownData: 0
+  }
+
+
+
+  componentDidMount() {
+    this.fetchResults()
+    this.getCrowns()
+  }
+
+
+  fetchResults = () => {
+    let UserId = localStorage.getItem('UserId');
+
+    fetch(`http://localhost:8080/scores/${UserId}`)
+    .then((response) => {
+      return response.json()
+    })
+    .then((json) => {
+      console.log(json)
+      this.setState({
+        totalScore: json[0].total
+      }, this.getCrowns)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
+
+  getCrowns = () => {
+    let crownData = Math.floor(this.state.totalScore / 10)
+    this.setState({
+      crownData: crownData
+    })
   }
 
   onSuccess = (response) => {
@@ -82,17 +117,20 @@ class App extends Component {
             <div className="content">
               <Switch>
                 <Route path="/" exact component={HomePage} />
-                <Route path="/dashboard" exact component={DashboardPage} />
+                <Route path="/dashboard" exact
+                  render={(props) => <DashboardPage {...props}
+                   totalScore={this.state.totalScore}
+                   crownData={this.state.crownData} />}
+                    />
                 <Route path="/user" exact component={UserPage} />
-                <Route path="/topic/:id" exact
-                  render={(props) => <TopicPage {...props}
-                   swimTime={this.onSuccess}
-                   hikeTime={this.onFailed}
-                   gymTime={this.logout} />}
-                   />
+                <Route path="/topic/:id" exact component={TopicPage}/>
                 <Route path="/PostQuizPage" exact component={PostQuizPage} />
                 <Route path="/EndQuizPage" exact component={PostQuizLosePage} />
-                <Route path="/stats" exact component={Stats} />
+                <Route exact path="/stats"
+                  render={(props) => <Stats {...props}
+                   totalScore={this.state.totalScore}
+                   pointsData={this.state.crownData} />}
+                   />
               </Switch>
             </div>
         </div>

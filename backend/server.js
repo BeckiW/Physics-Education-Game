@@ -4,6 +4,7 @@ import bodyParser from "body-parser"
 import cors from "cors"
 import bcrypt from "bcrypt-nodejs"
 import uuid from "uuid-v4"
+import moment from 'moment'
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -169,7 +170,7 @@ app.post("/sessions", (req, res) => {
   User.findOne({ username: req.body.username })
     .then(user => {
       if (user && bcrypt.compareSync(req.body.password, user.password)) {
-        res.json({ id: user.id, accessToken: user.accessToken })
+        res.json({ id: user.id, username: user.username, accessToken: user.accessToken })
       } else {
         res.send("Username or password not found")
       }
@@ -226,6 +227,23 @@ app.get("/results/:id", (req, res) => {
     })
   })
 })
+
+//GET Results by time?
+
+app.get("/resultsTime/:id", (req, res) => {
+
+  let user = req.params.id
+  let startDate = moment().subtract(7, 'days')
+
+  Result.find({
+    user_id: user,
+    datetime: { $gte: startDate }
+  })
+  .then(result => {
+    res.json(result)
+    })
+})
+
 
 //Get scores
 

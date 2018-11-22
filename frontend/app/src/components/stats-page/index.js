@@ -19,9 +19,9 @@ class Stats extends React.Component {
 
 
   fetchResults = () => {
-    let UserId = localStorage.getItem('UserId');
+    let userId = DuoPhysicsClient.getUserId();
 
-    fetch(`${DuoPhysicsClient.ServerUrl}/scores/${UserId}`)
+    fetch(`${DuoPhysicsClient.ServerUrl}/scores/${userId}`)
     .then((response) => {
       return response.json()
     })
@@ -36,62 +36,64 @@ class Stats extends React.Component {
     })
   }
 
+
+
   render() {
+    let userName = DuoPhysicsClient.getUserName()
+
     return (
 
-    <div>
-        <div className="user-container">
-          <h1> Achievements </h1>
-          <div className="user-box">
-            <div>
-              <p>Username: {this.props.username}</p>
-            </div>
-            <div>
-              <p>Great job! You have earned {this.state.totalScore} points so far!</p>
-            </div>
-          </div>
+    <div className="stats-page">
+      <div className="user-container">
+        <h1>Achievements</h1>
+
+        <div className="user-content">
           <div>
             <img src="./anon-user.jpg" alt="user" />
           </div>
-
+          <div>
+            <p>Hello {userName}</p>
+            <p>Great job! You have earned {this.props.totalScore} points so far!</p>
+          </div>
         </div>
-        <div className="achievement-container">
-          <Achievements
-            pointsData={this.state.pointsData}
-            pointsLimit={20}
-            source="badge-heart2"
-          />
-          </div>
-          <div className="achievement-container">
-          <Achievements
-            pointsData={this.state.pointsData}
-            pointsLimit={50}
-            source="badge-star"
-          />
-          </div>
-          <div className="achievement-container">
-          <Achievements
-            pointsData={this.state.pointsData}
-            pointsLimit={70}
-            source="badge-heart2"
-          />
-          </div>
-          <div className="achievement-container">
-          <Achievements
-            pointsData={this.state.pointsData}
-            pointsLimit={100}
-            source="badge-diamond"
-          />
-          </div>
-          <div className="achievement-container">
-          <Achievements
-            pointsData={this.state.pointsData}
-            pointsLimit={150}
-            source="badge-diamond2"
-          />
-          </div>
+      </div>
 
-        </div>
+      <Achievements
+        pointsData={this.state.totalScore}
+        pointsLimit={20}
+        source="badge-heart2"
+        headline="Champion!"
+        text="You conquered a course!"
+      />
+      <Achievements
+        pointsData={this.state.totalScore}
+        pointsLimit={50}
+        source="badge-star"
+        headline="Champion!"
+        text="You conquered a course!"
+      />
+      <Achievements
+        pointsData={this.state.totalScore}
+        pointsLimit={70}
+        source="badge-heart2"
+        headline="Champion!"
+        text="You conquered a course!"
+      />
+      <Achievements
+        pointsData={this.state.totalScore}
+        pointsLimit={100}
+        source="badge-diamond"
+        headline="Champion!"
+        text="You conquered a course!"
+      />
+      <Achievements
+        pointsData={this.state.totalScore}
+        pointsLimit={150}
+        source="badge-diamond2"
+        headline="Champion!"
+        text="You conquered a course!"
+      />
+    </div>
     )
   }
 

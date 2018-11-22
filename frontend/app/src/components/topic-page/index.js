@@ -82,7 +82,12 @@ class TopicPage extends React.Component {
       quizEnded = true;
       didWin = true;
     }
-    else if (this.state.questionsAnswered === 5 && this.state.totalScore < 10){
+    else if (this.state.questionsAnswered === 20 && this.state.totalScore < 10){
+      quizEnded = true;
+      didWin = false;
+    }
+
+    if (this.state.questionsAnswered >= this.state.questionData.length) {
       quizEnded = true;
       didWin = false;
     }
@@ -196,6 +201,10 @@ class TopicPage extends React.Component {
 
     let question = this.state.questionData[this.state.questionToShow]
     let content = ""
+
+    if (question === undefined) {
+      return <div></div>
+    }
 
     if (this.state.showQuestionResult)
     {

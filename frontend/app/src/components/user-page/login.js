@@ -33,7 +33,7 @@ class LogInForm extends React.Component {
         response.json()
       ))
       .then(result => {
-        DuoPhysicsClient.onLogin(result.id, result.accessToken);
+        DuoPhysicsClient.onLogin(result.id, result.username, result.accessToken);
         console.log("Success!")
 
         this.setState({

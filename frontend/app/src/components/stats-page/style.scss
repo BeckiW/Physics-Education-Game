@@ -1,48 +1,19 @@
-.user-container {
-    margin: 0 auto;
-    width: 800px;
-    height: 310px;
-    padding: 25px;
-    border: 1px solid black;
-    background-color: white;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
+.stats-page {
+  padding-top: 20px;
 
-.user-box {
-    float: right;
-    margin-bottom: 10px;
-    height: 120px;
-    padding: 10px;
-}
+  .user-container {
+      margin: 0px auto;
+      width: 800px;
+      height: 310px;
+      padding: 10px 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 25px rgba(0,0,0,.04);
 
-.achievement-container {
-    margin: 0 auto;
-    width: 800px;
-    height: 150px;
-    padding: 25px;
-    border: 1px solid black;
-    background-color: white;
-    border-radius: 10px;
-    margin-bottom: 10px;
-
-    img {
-      height: 100px;
-    }
-
-    .badge {
-      width: 20%;
-      filter: grayscale(100%);
-      img {
-        width: 100%;
+      .user-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
       }
-    }
-    .completed {
-      width: 20%;
-      filter: grayscale(0%);
-
-      img {
-        width: 100%;
-      }
-    }
+  }
 }

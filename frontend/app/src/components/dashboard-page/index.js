@@ -30,6 +30,9 @@ class DashboardPage extends React.Component {
       .catch((error) => {
         console.log(error)
       })
+
+
+
   }
 
   render() {
@@ -49,7 +52,7 @@ class DashboardPage extends React.Component {
         <div className="dashboard-sidebar">
           <div>
             <a href="/stats"><img src="/crown.png" alt="Logo" /></a>
-            <h2>You are on {0} crowns</h2>
+            <h2>You are on {this.props.crownData} crowns</h2>
           </div>
         </div>
       </div>

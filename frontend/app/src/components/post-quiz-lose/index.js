@@ -9,7 +9,7 @@ class PostQuizLosePage extends React.Component {
 
     return(
 
-      <div className="winner-container">
+      <div className="loser-container">
         <h1> Game over! You got ?? answers correct</h1>
 
         <img src={"./GameOver.png"} alt="loser" />

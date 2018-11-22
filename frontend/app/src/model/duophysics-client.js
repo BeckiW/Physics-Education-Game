@@ -2,6 +2,7 @@
 class DuoPhysicsClient {
   constructor() {
     this._userId = localStorage.getItem('UserId');
+    this._userName = localStorage.getItem('UserName');
     this._userToken = localStorage.getItem('UserToken');
   }
 
@@ -20,12 +21,21 @@ class DuoPhysicsClient {
     return true;
   }
 
+  getUserId = () => {
+    return this._userId;
+  }
+
   getUserToken = () => {
     return this._userToken;
   }
 
-  onLogin = (id, userToken) => {
+  getUserName = () => {
+    return this._userName;
+  }
+
+  onLogin = (id, userName, userToken) => {
     localStorage.setItem('UserId', id);
+    localStorage.setItem('UserName', userName);
     localStorage.setItem('UserToken', userToken);
 
     this._userId = id;
