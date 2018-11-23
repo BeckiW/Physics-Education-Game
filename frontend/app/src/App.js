@@ -20,9 +20,8 @@ class App extends Component {
     newResult: {},
     newResultAdded: false,
     totalScore: 0,
-    crownData: 0
+    crownData: 0,
   }
-
 
 
   componentDidMount() {
@@ -56,19 +55,6 @@ class App extends Component {
     })
   }
 
-  onSuccess = (response) => {
-    const token = response.headers.get('userToken');
-    response.json().then(user => {
-      if (token) {
-        this.setState({isAuthenticated: true, user: user, token: token});
-      }
-    })
-  }
-
-  onFailed = (error) => {
-    alert(error);
-  };
-
   postData = () => {
     const url = "http://localhost:8080/result"
     const { newResult } = this.state
@@ -91,25 +77,10 @@ class App extends Component {
       })
   }
 
-  addNewResult = newResult => {
-    this.setState({
-      newResult
-    }, () => { this.postData() })
-  }
-
-  checkLogInStatus = status => {
-    this.setState({
-      isAuthenticated: status
-    }, () => { console.log(this.state.isAuthenticated)} )
-  }
-
-
-  logout = () => {
-    this.setState({isAuthenticated: false, token: '', user: null})
-};
 
   render() {
     return (
+
       <Router>
           <div className="app">
             <Header />

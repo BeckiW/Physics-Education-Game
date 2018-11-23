@@ -23,7 +23,7 @@ class Header extends React.Component {
   }
 
   render() {
-    let userInfo = DuoPhysicsClient.isLoggedIn() ? DuoPhysicsClient.getUserName() : "Logged Out"
+    let userInfo = DuoPhysicsClient.isLoggedIn() ? "Hello " + DuoPhysicsClient.getUserName() : ""
     let userLogged = DuoPhysicsClient.isLoggedIn() ? <a href="/user">Log Out</a> : <a href="/user">Login / Register</a>
 
     return (

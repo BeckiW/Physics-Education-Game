@@ -69,29 +69,29 @@ class Stats extends React.Component {
         pointsData={this.state.totalScore}
         pointsLimit={50}
         source="badge-star"
-        headline="Champion!"
-        text="You conquered a course!"
+        headline="Wildfire!"
+        text="You sustained your streak!"
       />
       <Achievements
         pointsData={this.state.totalScore}
         pointsLimit={70}
-        source="badge-heart2"
-        headline="Champion!"
-        text="You conquered a course!"
+        source="badge-medal"
+        headline="Overachiever"
+        text="You can't be stopped!"
       />
       <Achievements
         pointsData={this.state.totalScore}
         pointsLimit={100}
         source="badge-diamond"
-        headline="Champion!"
-        text="You conquered a course!"
+        headline="Super player!"
+        text="You are pushing yourself to the max!"
       />
       <Achievements
         pointsData={this.state.totalScore}
         pointsLimit={150}
         source="badge-diamond2"
-        headline="Champion!"
-        text="You conquered a course!"
+        headline="Overtime!"
+        text="You put in the time to reach your goals!"
       />
     </div>
     )

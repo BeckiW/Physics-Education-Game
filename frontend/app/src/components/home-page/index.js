@@ -1,4 +1,5 @@
 import React from 'react'
+import DuoPhysicsClient from "../../model/duophysics-client.js"
 import './style.scss'
 
 
@@ -9,6 +10,9 @@ class HomePage extends React.Component {
   }
 
   render() {
+
+    let userLogged = DuoPhysicsClient.isLoggedIn() ? "/dashboard" : "/user"
+
     return (
       <div className="homepage">
 
@@ -18,7 +22,7 @@ class HomePage extends React.Component {
             <h1>DuoPhysics</h1>
             <p>Learn Physics for free</p>
             <br />
-            <a href="/user">Get Started</a>
+            <a href={userLogged}>Get Started</a>
           </div>
         </div>
 
