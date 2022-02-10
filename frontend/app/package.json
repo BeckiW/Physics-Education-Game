@@ -7,7 +7,7 @@
     "eslint-config-technigo": "^1.6.2",
     "moment": "^2.22.2",
     "nivo": "^0.31.0",
-    "node-sass": "^4.10.0",
+    "node-sass": "^7.0.0",
     "react": "^16.6.1",
     "react-charts": "^2.0.0-alpha.7",
     "react-dom": "^16.6.1",
